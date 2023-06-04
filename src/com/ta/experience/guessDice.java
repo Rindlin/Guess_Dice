@@ -27,7 +27,7 @@ public class guessDice {
     private int score;
 
     public guessDice(){
-        score=0;
+        score = 0;
         frame = new JFrame("Can you guess the number on dice?");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400,400);
@@ -72,10 +72,10 @@ public class guessDice {
         exitBtn = new JButton("Exit");
         resultBtn = new JButton("Result");
         newGameBtn = new JButton("New Game");
-        rollBtn.setBackground(Color.CYAN);
+        rollBtn.setBackground(Color.GREEN);
         exitBtn.setBackground(Color.RED);
         resultBtn.setBackground(Color.YELLOW);
-        newGameBtn.setBackground(Color.GREEN);
+        newGameBtn.setBackground(Color.CYAN);
         buttonPanel.setLayout(new GridLayout(1, 4));
         buttonPanel.add(rollBtn);
         buttonPanel.add(exitBtn);
@@ -120,6 +120,8 @@ public class guessDice {
             public void actionPerformed(ActionEvent e) {
                 tableModel.setRowCount(0);
                 score = 0;
+                groupBtn.clearSelection();
+                JOptionPane.showMessageDialog(frame, "New Game Started!","New Game",JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -158,9 +160,15 @@ public class guessDice {
                 tableModel.addRow(rowData);
 
                 if (afterGuessNum==currentImageIndex+1){
-                    JOptionPane.showMessageDialog(frame,"Your Answer is Correct","Wohoo, You're so Lucky",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame,"Your Answer is Correct","Wohoo, You're so Lucky",JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Your Answer is Wrong, The Correct Number is: "+ (currentImageIndex+1),"Hahaha, Your hands don't smell good",JOptionPane.ERROR_MESSAGE);
+                    String guessMessage;
+                    if (afterGuessNum>currentImageIndex+1){
+                        guessMessage = "Your Answer is Wrong, Please Guess Lower";
+                    }else {
+                        guessMessage = "Your Answer is Wrong, Please Guess Higher";
+                    }
+                    JOptionPane.showMessageDialog(frame, guessMessage, "Hahaha, Your Hands Don't Smell Good", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
             }
